@@ -1,0 +1,36 @@
+package com.mycompany.udpclient;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.util.Scanner;
+public class UdpClient {
+    public static void main(String[] args) {
+        final String HOST = "localhost";
+        final int PUERTO = 5000;
+        try (Scanner sc = new Scanner(System.in)) {
+            System.out.print("Ingrese su identificador (ej. Cliente01): ");
+            String identificador = sc.nextLine();
+            try (DatagramSocket socket = new DatagramSocket()) {
+                InetAddress direccion = InetAddress.getByName(HOST);
+                
+                for (int i = 1; i <= 5; i++) {
+                    String mensaje = identificador + " - Mensaje " + i;
+                    byte[] datos = mensaje.getBytes();
+                    
+                    DatagramPacket paquete = new DatagramPacket(datos, datos.length, direccion, PUERTO);
+                    socket.send(paquete);
+                    
+                    System.out.println("Mensaje enviado: " + mensaje);
+                    Thread.sleep(2000); 
+                }
+                
+                
+                
+            } catch (Exception e) {
+            }
+
+
+
+            }
+    }
+}
