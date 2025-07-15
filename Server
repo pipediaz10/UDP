@@ -1,0 +1,35 @@
+package com.mycompany.udpserver;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class UdpServer {
+    public static void main(String[] args) {
+        final int PUERTO = 5000;
+        byte[] buffer = new byte[1024];
+
+        try (DatagramSocket socket = new DatagramSocket(PUERTO)) {
+            System.out.println("Servidor UDP iniciado. Esperando mensajes...");
+            boolean activo = true;
+
+            while (activo) {
+                DatagramPacket paquete = new DatagramPacket(buffer, buffer.length);
+                socket.receive(paquete);
+
+                String mensaje = new String(paquete.getData(), 0, paquete.getLength());
+                String hora = new SimpleDateFormat("HH:mm:ss").format(new Date());
+                String remitente = paquete.getAddress().getHostAddress() + ":" + paquete.getPort();
+
+                System.out.println("[" + hora + "] Mensaje recibido de " + remitente + ": " + mensaje);
+
+                if (mensaje.trim().equalsIgnoreCase("FIN")) {
+                    activo = false;
+                    System.out.println("Mensaje de cierre recibido. Servidor finalizado.");
+                }
+            }
+
+        } catch (Exception e) {
+        }
+    }
+}
