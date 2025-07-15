@@ -1,1 +1,2 @@
 # UDP
+Este programa tiene dos partes: un servidor y uclientes que se comunican usando UDP, un método para enviar mensajes sin conexión directa. El servidor se mantiene escuchando en el puerto 5000 y cada vez que recibe un mensaje, lo enseña en pantalla con la información del remitente; cada cliente pide al usuario un identificador (como "Cliente01") y luego envía cinco mensajes al servidor, con una pausa de dos segundos entre cada uno, mostrando en consola cada mensaje enviado. 
